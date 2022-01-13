@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    
+   <SingleList :user_lists="user_lists"></SingleList>
+    
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
+
+import SingleList from '../components/SingleList';
+import axios from "axios";
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    SingleList,
+  },
+  data(){
+    return{
+      user_lists:[]
+    }
+  },
+  mounted(){
+    axios.get("https://jsonplaceholder.typicode.com/users")
+    .then((res)=>{
+      console.log(res.data);
+      return res.data;
+    })
+    .then((data)=>{
+      this.user_lists = data;
+    })
   }
 }
 </script>
