@@ -51,9 +51,7 @@
           v-model="user.jobposition"
         />
       </div>
-     
-
-      <button type="submit" class="my-3 btn btn-success">Add Employee</button>
+      <button type="submit" class="my-3 btn btn-primary">Edit</button>
     </form>
   </div>
 </template>
@@ -61,6 +59,7 @@
 <script>
 import axios from "axios";
 export default {
+    props:["id"],
   data() {
     return {
       user: {
@@ -74,22 +73,37 @@ export default {
   },
   methods: {
     addUser() {
-      axios
-        .post("https://testing-api-mock.herokuapp.com/users",{
+        const data = {
             "fullname": this.user.name,
             "phoneNo":this.user.phone,
             "email":this.user.email,
             "age":this.user.age,
-            "jobPosition":this.user.jobposition
-        })
+            "jobPosition":this.user.jobposition,
+            "id":this.id
+        }
+        
+      axios
+        .put("https://testing-api-mock.herokuapp.com/users", data)
         .then(() => {
           this.$router.push("/");
         })
         .catch(function (error) {
-          console.log(error);
+          console.log(error.message);
         });
     },
   },
+  mounted(){
+      axios.get("https://testing-api-mock.herokuapp.com/users/"+this.id)
+      .then((res)=>{
+          const fetcheduser = res.data;
+          console.log(fetcheduser.fullname);
+          this.user.name = fetcheduser.fullname;
+          this.user.phone = fetcheduser.phoneNo;
+          this.user.email = fetcheduser.email;
+          this.user.age = fetcheduser.age;
+          this.user.jobposition = fetcheduser.jobPosition;
+      })
+  }
 };
 </script>
 
