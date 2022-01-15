@@ -31,7 +31,7 @@
             <button class="btn btn-primary me-3" @click="edit(user)">
               Edit</button
             ><button class="btn btn-danger me-3" @click="Remove(user.id)">Delete</button>
-            <button class="btn btn-info" @click="view">View</button>
+            <button class="btn btn-info">View</button>
           </td>
         </tr>
       </tbody>
