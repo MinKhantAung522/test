@@ -1,37 +1,39 @@
 <template>
   <div>
-    <table class="table text-start">
+    <table class="table table-bordered border-dark text-start">
       <thead>
         <tr>
           <th scope="col">No</th>
-          <th scope="col">FullName</th>
-          <th scope="col">Phone</th>
+          <th scope="col">Name</th>
+          <th scope="col">DateOfBirth</th>
+          <th scope="col">MartialStatus</th>
           <th scope="col">Email</th>
-          <th scope="col">Age</th>
-          <th scope="col">Job Position</th>
-          <th scope="col" class="text-start">
-            <button class="btn btn-success" @click="addEmployee">
-              Add Employee
-            </button>
-            <button class="btn btn-danger ms-2" @click="deleteAll">
-              Delete All Employee
-            </button>
+          <th scope="col">PhoneNo</th>
+          <th scope="col">City</th>
+          <th scope="col">Address</th>
+          <th scope="col">status</th>
+          <th class="text-start">
+            
+           
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in user_lists" :key="user.id">
-          <td>{{ user.id }}</td>
-          <td>{{ user.fullname }}</td>
-          <td>{{ user.phoneNo }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.age }}</td>
-          <td>{{ user.jobPosition }}</td>
+        <tr v-for="customer in customerLists" :key="customer.id">
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.dateOfBirth }}</td>
+          <td>{{ customer.martialStatus }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phoneNo }}</td>
+          <td>{{customer.city}}</td>
+          <td>{{customer.address}}</td>
+          <td>{{customer.status}}</td>
           <td class="text-start">
-            <button class="btn btn-primary me-3" @click="edit(user)">
+            <button class="btn btn-primary me-1 mb-2" @click="edit(customer)">
               Edit</button
-            ><button class="btn btn-danger me-3" @click="Remove(user.id)">Delete</button>
-            <button class="btn btn-info">View</button>
+            >
+            <button class="btn btn-success" @click="view(customer.id)">View</button>
           </td>
         </tr>
       </tbody>
@@ -40,34 +42,17 @@
 </template>
 
 <script>
-import axios from 'axios';
+
 export default {
-  props: ["user_lists", "addUser"],
+  props: ["customerLists", "addUser"],
   methods: {
-    addEmployee() {
-      this.$router.push("/adduser");
+    edit(customer) {
+      this.$router.push("/edit/" + customer.id);
     },
-    edit(user) {
-      this.$router.push("/edit/" + user.id);
-    },
-    Remove(id){
-      axios.delete("https://testing-api-mock.herokuapp.com/users/"+id)
-      .then(()=>{
-        this.$emit("delete",id);
-      })
-      .catch((err)=>{
-        console.log(err.message);
-      })
-    },
-    deleteAll(){
-      axios.delete("https://testing-api-mock.herokuapp.com/users")
-      .then(()=>{
-        this.$emit("deleteAll");
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
+    view(customer){
+      this.$router.push("/view/"+customer)
     }
+  
   },
 };
 </script>

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import AddUser from '../components/AddUser.vue'
 import Edit from '../components/Edit.vue'
+import View from '../views/View.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -10,6 +11,13 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/view/:id',
+    name: 'View',
+    component: View,
+    props:true
+
   },
   {
     path: '/edit/:id',
@@ -39,3 +47,6 @@ const router = new VueRouter({
 })
 
 export default router
+
+
+
